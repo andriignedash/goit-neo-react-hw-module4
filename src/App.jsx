@@ -7,6 +7,7 @@ import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 import { fetchImages } from "./services/api.js";
 import styles from "./App.module.css";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   const [query, setQuery] = useState("");
@@ -26,7 +27,7 @@ export default function App() {
       try {
         const data = await fetchImages(query, page);
         setImages((prev) =>
-          page === 1 ? data.results : [...prev, ...data.results],
+          page === 1 ? data.results : [...prev, ...data.results]
         );
         setTotalPages(data.total_pages);
       } catch (error) {
@@ -53,6 +54,7 @@ export default function App() {
 
   return (
     <div className={styles.app}>
+      <Toaster position="top-right" reverseOrder={false} />
       <SearchBar onSubmit={handleSearch} />
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} onImageClick={openModal} />
